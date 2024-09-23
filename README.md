@@ -9,19 +9,14 @@ INFORA is a multi-functional web application that brings together three differen
    - There is a mood-based **dropdown** to select different moods (e.g., Happy, Sad, Motivated).
    - Based on the selected mood, the app suggests a random article in the search bar using a pre-defined mood-to-article mapping.
    - The user can also manually enter an article topic in the search bar.
-   - If the search bar is empty and the user attempts to search, an alert is shown: **"Search bar should not be empty!"**.
-   - Upon clicking the search button, the user is directed to the `articles.ejs` page which lists articles based on the search query.
-   - Selecting a mood is optional, but the search bar cannot be left empty.
 
 2. **Read Books:**
    - Another form is titled **"READ BOOKS"**, which works similarly to the article section.
    - The user can select a mood from the dropdown, and a random book title related to the mood will be shown in the search bar.
    - The user can also manually search for a book.
-   - The same validation applies as the article section: the search bar cannot be empty.
 
 3. **Latest News:**
    - The page includes a news section where the latest news from different countries is displayed.
-   - Every time the page is loaded, an API call is made to fetch real-time news data.
    - The news articles include titles, descriptions, published dates, and their sources.
    - The news section is dynamically rendered using **EJS** templates, and the news updates every time the page is refreshed.
 
