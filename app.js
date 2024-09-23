@@ -25,7 +25,7 @@ app.use(session({
 }));
 
 
-app.use("/infora" , listingsRouterInfora);
+app.use("/" , listingsRouterInfora);
 app.use("/books", listingsRouterBooks);
 app.use("/articles", listingsRouterArticles);
 
