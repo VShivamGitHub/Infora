@@ -53,4 +53,4 @@ The project uses **ExpressJS** as the backend framework and **EJS** for renderin
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/INFORA.git
+   git clone https://github.com/VShivamGitHub/INFORA.git
