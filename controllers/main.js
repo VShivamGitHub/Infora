@@ -3,7 +3,7 @@ const moodArticles = require("../public/articles/js/data");
 // ./public/books/js/data
 // fetches all articles data
 module.exports.fetchAllData = async(req,res) => {
-    let apiKEY = 'pub_53841f3ff286492fae006a730a9d837b53890';
+    let apiKEY = 'pub_541447cae16406586da952e4fdeae5e778b9e';
     let newsAPI = [
                    `https://newsdata.io/api/1/latest?apikey=${apiKEY}&country=in&prioritydomain=top`,
                    `https://newsdata.io/api/1/latest?apikey=${apiKEY}&country=us&prioritydomain=top`,
