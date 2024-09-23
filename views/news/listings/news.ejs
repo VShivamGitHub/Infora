@@ -1,0 +1,82 @@
+<% layout("/news/layouts/boilerPlate") %>
+
+<div class="search-bar-container">
+    <div class="dropdown-container">
+        <select id="moodDropdown" class="dropdown">
+            <option value="">Select a Mood</option>
+            <% Object.keys(moodTopics).forEach(function(mood) { %>
+                <option value="<%= mood %>"><%= mood %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="search-bar">
+        <form id="searchForm" method="GET" action="/articles/search" class="search-form">
+            <input type="search" id="searchInput" name="topics" class="search-input" placeholder="Search for articles...">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="articles-container">
+    <% data.articles.forEach(function(news, i) { %>
+        <% if(  news.source != null && 
+            news.thumbnail != null  &&
+            news.title != null &&
+            news.description != null && 
+            news.date != null &&
+            news.link != null)
+        { %>             
+            <div class="news-card">
+                <img src="<%= news.thumbnail %>" alt="<%= news.title %>" class="news-thumbnail">
+                <div class="news-content">
+                    <h3 class="news-title"><%= news.title %></h3>
+                    <p class="news-description"><%= news.description %></p>
+                    <p class="news-source">Source: <%= news.source %> - <%= news.date %></p>
+                    <a href="<%= news.link %>" target="_blank" class="news-link">Read More</a>
+                </div>
+                <div class="read-checkbox">
+                    <label>
+                        <input type="checkbox" class="mark-as-read-checkbox">
+                        Mark as Read
+                    </label>
+                </div>
+            </div>
+        <% } %>
+    <% }); %>
+</div>
+
+<script src="/articles/js/data.js"></script>
+<script src="/articles/js/search-bar.js"></script>
+
+<script>
+
+    // Script to handle checkbox style change
+    document.querySelectorAll('.read-checkbox input').forEach((checkbox) => {
+        checkbox.addEventListener('change', function() {
+            const card = this.closest('.article-card');
+            if (this.checked) {
+                card.classList.add('completed');
+            } else {
+                card.classList.remove('completed');
+            }
+        });
+    });
+    // Check if the user was redirected from home.ejs
+    const redirectedFromHome = localStorage.getItem('redirectedFromHome');
+    
+    if (redirectedFromHome) {
+        console.log("hi");
+        // Trigger the animation as the user came from home.ejs
+        document.querySelector('.search-bar-container').classList.add('animate-to-top-right');
+
+        // Remove the flag after the animation is triggered
+        localStorage.removeItem('redirectedFromHome');
+    } else {
+        // No animation if the user is already on article.ejs
+        // top: 0;
+        // right: 0;
+        document.querySelector('.search-bar-container').classList.remove('animate-to-top-right');
+        document.querySelector('.search-bar-container').style.top = '0';
+        document.querySelector('.search-bar-container').style.right = '0';
+    }
+</script>

@@ -1,0 +1,71 @@
+.book{
+    padding: 5rem ;
+}
+.bookInfo{
+    display: flex;
+    /* height: 100%; */
+    width: 100%;
+    justify-content: space-between;
+    /* align-content: space-between; */
+}
+.cardInfo{
+    /* margin-top: 20rem; */
+    /* flex: 3; */
+    width: 33em;
+}
+.btns{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    height: 3rem;
+}
+.pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.verticalLine{
+    width: 1px;                     
+    height: 50px;                  
+    background-color: grey;        
+    margin: 10px;
+}
+
+.btn-price{
+    border: 0px !important;
+    background-color: rgb(41 41 41);
+    border-radius: 0.3rem;
+    color: white !important;
+    cursor: text !important;
+}
+.btn-sample{
+    border: 1px solid black!important;
+    background-color: rgb(255, 255, 255) ;
+    color: rgb(0, 0, 0) !important;
+}
+.btn-sample a{
+    text-decoration: none;
+    color: black;
+}
+.btn-sample:hover{
+    background-color: rgb(0, 200, 255);
+}
+
+.cardImg{
+    border-radius: 0 !important;
+    /* width: 100% !important; */
+    height: 9em;
+    object-fit: fill !important;
+    /* flex: 1; */
+}
+.btn-category{
+    border: 0.5px solid black!important;
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(0, 0, 0) !important;
+    cursor: text !important;
+}
+.book-Desc .btn{
+    border-radius: 0 !important;
+}

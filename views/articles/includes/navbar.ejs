@@ -1,0 +1,31 @@
+<nav class="navbar1">
+    <div class="navbar1-content">
+        <div class="navbar1-title title"><a href="/infora">ARTICLES</a></div>
+    </div>
+    <div class="search-bar-container">
+        <div class="search-bar">
+            <form id="searchForm" method="GET" action="/articles/search" class="search-form">
+                <select id="moodDropdown" name="ArticleValue" class="dropdown">
+                    <option value="">Select a Mood</option>
+                    <% Object.keys(moodTopics).forEach(function(mood) { %>
+                        <option value="<%= mood %>"><%= mood %></option>
+                    <% }); %>
+                </select>
+                <input type="search" id="searchInput" name="topics" class="search-input" placeholder="Search for articles...">
+                <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<script>
+    const searchformArticle = document.getElementById('searchForm');
+    searchformArticle.addEventListener('submit', function(event) {
+        const selectedOption = document.getElementById('moodDropdown');
+        const searchInput = document.getElementById('searchInput').value;
+        if (!selectedOption || searchInput.trim() === '') {
+          alert('Please select a checkbox or enter a search term.');
+          event.preventDefault();
+        }
+    });
+</script>

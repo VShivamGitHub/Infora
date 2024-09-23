@@ -1,0 +1,61 @@
+<% layout("/books/layouts/boilerPlate") %>
+<div class="cart">
+    <% items.forEach(function(item){ %>
+        <div class="cart-card" id="card-<%= item.data.id %>">
+            <form action="/books/change" method="POST">
+                <input type="hidden" name="bookName" value="<%= bookName %>">
+                <input type="hidden" name="action" value="toggle-check">
+                <input type="hidden" name="itemId" value="<%= item.data.id %>">
+                <input type="checkbox" class="item-select" name="checked" value="<%= item.checked %>" data-index="<%= item.data.id %>" <%= item.checked ? 'checked' : '' %> onchange="this.form.submit()">
+            </form>
+            <div class="img-side">
+                <div class="img-button">
+                    <img src="<%= item.data.volumeInfo.imageLinks.thumbnail %>" alt="This is a book image">
+                </div>
+                <div class="quantity-controls">
+                    <form action="/books/change" method="POST">
+                        <label for="quantity-<%= item.data.id %>">Quantity:</label>
+                        <input type="hidden" name="bookName" value="<%= bookName %>">
+                        <input type="hidden" name="action" value="quantity-change">
+                        <input type="hidden" name="itemId" value="<%= item.data.id %>">
+                        <select id="quantity-<%= item.data.id %>" name="newQuantity" onchange="this.form.submit()">
+                            <% for (let i = 1; i <= item.available; i++) { %> 
+                                <option value="<%= i %>" <%= i === item.quantity ? 'selected' : '' %>><%= i %></option>
+                            <% } %>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="other-side">
+                <% if(item.data.volumeInfo.title.length <= 20 ){ %>
+                    <h3><%= item.data.volumeInfo.title %></h3>
+                <% }else{ %>
+                    <h3><%= item.data.volumeInfo.title.substring(0, 20) + "..." %></h3>
+                <% } %>
+                <p>Price : &#8377;<span class="item-price"><%= item.price %></p>
+                <form action="/books/change" method="POST">
+                    <input type="hidden" name="bookName" value="<%= bookName %>">
+                    <input type="hidden" name="action" value="delete-item">
+                    <input type="hidden" name="itemId" value="<%= item.data.id %>">
+                    <button type="submit" class="delete-item" data-index="<%= item.data.id %>">Delete</button>
+                </form>
+            </div>
+        </div>
+    <% }) %>
+    <hr style="height: 2px; background-color: black; border: none;" >
+    <div >
+        <h4>Subtotal: &#8377;<span id="subtotal"> <%= subtotal.toFixed(2) %> </span></h4>
+    </div >
+    <hr style="height: 2px; background-color: black; border: none;">
+    <div class="cart-btn">
+        <form action="/books/store" method="get">
+            <input type="hidden" name="bookName" value="<%= bookName %>">
+            <button type="submit" class="btn btn-info" name="action" value="buyMore">Buy More</button>
+        </form>
+        <form action="/books/checkOut" method="post">
+            <input type="hidden" name="bookName" value="<%= bookName %>">
+            <button type="submit" class="btn btn-success" name="action" value="checkOut">Procced To CheckOut</button>
+        </form>
+    </div>
+    <div style="height: 5rem;border:0px"></div>
+</div>

@@ -1,0 +1,72 @@
+<% layout("/articles/layouts/boilerPlate") %>
+
+
+<% if( ArticleValue != null && ArticleValue !== ""){ %>
+    <p style="z-index: 0;">"Your search for <b><i><%= topics %></i></b> reflects a <b><i><%= ArticleValue %></i></b> mood."</p>
+<% }else{ %>
+    <p style="z-index: 0;">"You searched for <b><i><%= topics %></i></b> "</p>
+<% } %>
+
+
+<div class="articles-container">
+    <% data.articles.forEach(function(article, i) { %>
+        <% if(  article.urlToImage != null && 
+                article.title != null  &&
+                article.author != null &&
+                article.description != null && 
+                article.publishedAt != null &&
+                article.url != null){ %>
+            <div class="article-card" id="article-<%= i %>">
+                <div class="upper-part">
+                    <img src="<%= article.urlToImage %>" alt="<%= article.title %> image" class="article-img">
+                    <% let title = '' %>
+                    <% if(article.title.length <= 40 ){ %>
+                        <% title = article.title %>
+                    <% }else{ %>
+                        <% title = article.title.substring(0, 40) + "..." %>
+                    <% } %>
+                    <h3><%= title %></h3>
+                    <% let author = '' %>
+                    <% if(article.author.length <= 15 ){ %>
+                        <% author = article.author %>
+                    <% }else{ %>
+                        <% author = article.author.substring(0, 15) + "..." %>
+                    <% } %>
+                    <p><strong>Author:</strong> <%= author %></p>
+                    <% let description = '' %>
+                    <% if(article.description.length <= 100 ){ %>
+                        <% description = article.description %>
+                    <% }else{ %>
+                        <% description = article.description.substring(0, 100) + "..." %>
+                    <% } %>
+                    <p><%= description %></p>
+                    <p><strong>Published:</strong> <%= article.publishedAt %></p>
+                </div>
+                <div class="lower-part">
+                    <a href="<%= article.url %>" target="_blank" class="read-btn">READ ARTICLE</a>
+                    <label class="read-checkbox">
+                        <input type="checkbox" id="check-<%= i %>"> Completed
+                    </label>
+                </div>
+            </div>
+        <% } %>
+    <% }); %>
+</div>
+
+<script src="/articles/js/data.js"></script>
+<script src="/articles/js/search-bar.js"></script>
+
+<script>
+
+    // Script to handle checkbox style change
+    document.querySelectorAll('.read-checkbox input').forEach((checkbox) => {
+        checkbox.addEventListener('change', function() {
+            const card = this.closest('.article-card');
+            if (this.checked) {
+                card.classList.add('completed');
+            } else {
+                card.classList.remove('completed');
+            }
+        });
+    });
+</script>

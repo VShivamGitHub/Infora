@@ -1,0 +1,30 @@
+<% layout("/articles/layouts/boilerPlate") %>
+
+<div class="content">
+    <div class="search-container">
+        <div class="dropdown-container">
+            <select id="moodDropdown" class="dropdown">
+                <option value="">Select a Mood</option>
+                <% Object.keys(moodTopics).forEach(function(mood) { %>
+                    <option value="<%= mood %>"><%= mood %></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="search-bar">
+            <form id="searchForm" method="GET" action="/articles/search" class="search-form">
+                <input type="search" id="searchInput" name="topics" class="search-input" placeholder="Search for articles..." name="query">
+                &nbsp; <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/articles/js/data.js"></script>
+<script src="/articles/js/search-bar.js"></script>
+
+<script>
+    // Set a flag when the form is submitted (indicating a redirect from home.ejs)
+    document.getElementById('searchForm').addEventListener('submit', function() {
+        localStorage.setItem('redirectedFromHome', 'true');
+    });
+</script>

@@ -1,0 +1,74 @@
+/* Navbar container */
+.navbar1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c2c2c; /* Blackish background */
+    padding: 15px 0;
+    /* text-align: center; */
+    position: sticky;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 5;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Content inside the navbar */
+.navbar1-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.5rem;
+    margin-left: 1rem;
+}
+
+/* Navbar title (centered) */
+.navbar1-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffffff; /* White text color */
+    letter-spacing: 2px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out; /* Hover effects */
+    cursor: pointer; /* Pointer to indicate clickable */
+}
+
+.navbar1-title a{
+    text-decoration: none;
+    color: white;
+}
+
+/* Hover effect on the navbar title */
+.navbar1-title:hover , .navbar1-title a:hover {
+    transform: scale(1.1); /* Enlarge the text on hover */
+    color: #ffcc00; /* Change color to gold */
+}
+
+/* Active effect (e.g., when clicked) */
+.navbar1-title:active , .navbar1-title a:active {
+    transform: scale(1.05); /* Slight scaling when active */
+    color: #ff9900; /* A darker gold for active state */
+}
+
+/* Navbar sticks on scroll */
+.navbar1.sticky {
+    background-color: #1f1f1f; /* Slightly darker when sticky */
+}
+
+/* Animation effect when scrolling */
+.navbar1-title {
+    animation: titleAnimation 1s ease-in-out;
+}
+
+/* Define keyframes for the animation */
+@keyframes titleAnimation {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

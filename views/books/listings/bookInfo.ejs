@@ -1,0 +1,65 @@
+<% layout("/books/layouts/boilerPlate") %>
+<div class="book">
+    <div class="bookInfo">
+        <div class="cardInfo">
+            <b style="font-size: 2rem;"><%= book.volumeInfo.title %></b>
+            <br>
+            <b style="font-size: 1.1rem;color: rgb(76, 76, 76);"><%= book.volumeInfo.authors[0] %></b>
+            <br>
+            <%= book.volumeInfo.publishedDate %> , <%= book.volumeInfo.publisher %>
+            <br><br>
+            <div class="btns">
+                <div class="pages">
+                    <% if(book.volumeInfo.pageCount) {%>
+                        <b><%= book.volumeInfo.pageCount %></b>
+                    <% }else{ %>
+                        <b><%= Math.floor(Math.random() * (101)) + 500 %></b>
+                    <% } %>
+                    pages
+                </div>
+                <div class="verticalLine">
+    
+                </div>
+                <button class="btn-price">
+                    &#8377; <%= price %>
+                </button>
+                <button class="btn-sample">
+                    <a href=" <%= book.volumeInfo.canonicalVolumeLink %> " target="_blank"><b>MORE INFO </b></a>
+                </button>
+            </div>
+        </div>
+        <div class="cardImg">
+            <img src="<%= book.volumeInfo.imageLinks.thumbnail %>" alt="This is an image of book">
+        </div>
+    </div>
+    <br>
+    <hr style="height: 2px; background-color: black; border: none;" >
+    <div class="book-Desc">
+        <b>DESCRIPTION :</b>
+        <p><%= book.volumeInfo.description %></p>
+        <% if(book.volumeInfo.categories){ %>
+            <% book.volumeInfo.categories.forEach(function(category){ %>
+                <button class="btn-category"><%= category %></button>
+            <% }) %>
+        <% } %>
+        <br>
+        <hr style="height: 2px; background-color: black; border: none;" >
+        <form action="/books/handleItems" method="POST">
+            <input type="hidden" name="productId" value="<%= book.id %>">
+            <input type="hidden" name="price" value="<%= price %>">
+            <input type="hidden" name="bookName" value="<%= bookName %>">
+            <input type="hidden" name="n" value="<%= n %>">
+            <label for="quantity">Choose Quantity:</label>
+            <select name="quantity" id="quantity">
+                <% for (let i = 1; i <= n; i++) { %>
+                    <option value="<%= i %>"><%= i %></option>
+                <% } %>
+            </select>
+            
+            <br><br>
+            <button class="btn btn-secondary" type="submit" name="action" value="addToCart">Add to Cart</button>
+            <button class="btn btn-dark" type="submit" name="action" value="buyNow">Buy Now</button>
+        </form>
+    </div>
+    <div style="height: 3rem;border:0px"></div>
+</div>

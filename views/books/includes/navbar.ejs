@@ -1,0 +1,72 @@
+
+<div class="navbar1">
+    <div class="title">
+        <a href="/infora">ONLINE BOOKSTORE</a>
+    </div>
+
+    <div class="search-bar-container">
+        <div class="cart-icon">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <div class="search-bar">
+            <form method="GET" action="/books/store" id="searchForm"  class="d-flex search" role="search">
+                <div class="dropdown-container">
+                    <select class="mood-select" name="Moodbook" id="books-mood">
+                        <!-- Options populated by JavaScript -->
+                        <option value="">Select a Mood</option>
+                        <% Object.keys(moodTopics).forEach(function(mood) { %>
+                            <option value="<%= mood %>"><%= mood %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <input class="search-input" type="search" id="books-search" name="bookName" placeholder="Search" aria-label="Search">
+                <button class="search-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="/books/js/data.js" ></script>
+<script src="/books/js/search-bar.js" ></script>
+<!-- <script src="../../../public/books/js/data.js" ></script>
+<script src="../../../public/books/js/search-bar.js" ></script> -->
+
+<script>
+    // // Select the div with the class 'cart-icon'
+    // const title = document.querySelector('.title');
+    const cartIcon = document.querySelector('.cart-icon');
+
+    // Add a click event listener to the cart icon
+    cartIcon.addEventListener('click', function() {
+        fetch('/books/carts')
+            .then(response => response.json()) // Parse the JSON response
+            .then((data) => {
+                if (data.isCartEmpty) {
+                    // Show alert if the cart is empty
+                    alert("The cart is Empty!");
+                }
+                else{
+                    window.location.href = '/books/getInfoCart/<%= bookName %>';
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
+    // Select the div with the class 'cart-icon'
+
+    const searchformArticle = document.getElementById('searchForm');
+    searchformArticle.addEventListener('submit', function(event) {
+        const selectedOption = document.getElementById('books-mood');
+        const searchInput = document.getElementById('books-search').value;
+        if (!selectedOption || searchInput.trim() === '') {
+          alert('Please select a checkbox or enter a search term.');
+          event.preventDefault();
+        }
+    });
+
+
+</script>

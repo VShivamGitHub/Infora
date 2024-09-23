@@ -1,0 +1,68 @@
+<% layout("/books/layouts/boilerPlate") %>
+<div class="product">
+    <h3>CheckOut Summary</h3>
+    <table class="checkout-table">
+        <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Price (&#8377;)</th>
+                <th>Quantity</th>
+                <th>Total Price (&#8377;)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% items.forEach(function(item) { %>
+                <tr>
+                    <td><%= item.data.volumeInfo.title %></td>
+                    <td><%= item.price.toFixed(2) %></td>
+                    <td><%= item.quantity %></td>
+                    <td><%= item.totalPrice.toFixed(2) %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="2"><strong>Overall Total:</strong></td>
+                <td><strong>&#8377;<%= Total.toFixed(2) %></strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <form action="/books/store" method="get" novalidate class="check needs-validation">
+        <input type="hidden" name="bookName" value="<%= bookName %>">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Deliver To:</label>
+            <textarea class="form-control address validate" id="exampleFormControlTextarea1" placeholder="Enter Your Delivery Address" rows="3" required></textarea>
+        </div>
+        <div class="btn-place-order">
+            <button type="submit" class="btn btn-success">PLACE ORDER</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Select the div with the class 'cart-icon'
+    const form1 = document.querySelector('.check');
+
+    form1.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        let validateFields = form1.querySelector('.validate');
+
+        console.log(validateFields.value);
+        if (!validateFields.value.trim()) { // Check if the field is empty
+            alert("Address Field should not be empty!"); // Display an alert with the field name
+            isValid = false; // Mark the form as invalid
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else{
+            alert("Your Order is Successfully Placed !");
+            window.location.href = '/';
+        }
+        form1.classList.add('was-validated');
+    }, false)
+</script>

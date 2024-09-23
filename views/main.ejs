@@ -1,0 +1,152 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header class="navbar1">
+        <h1>INFORA</h1>
+    </header>
+    <main>
+        <div class="tagline">
+            Your gateway to knowledge and entertainments, and to Explore Latest News Scoll Down
+        </div>
+        <section class="cards1">
+            <div class="card1" id="card-articles" data-target="/articles/search">
+                <h2>READ ARTICLES</h2>
+                <img src="/img/article-logo.png" alt="Read Articles">
+                <div class="search-bar">
+                    <form id="searchFormArticles" class="searchForm" method="GET" action="">
+                        <select class="mood-select" name="ArticleValue" id="articles-mood">
+                            <option value="">Select a Mood</option>
+                            <% Object.keys(moodArticles).forEach(function(mood) { %>
+                                <option value="<%= mood %>"><%= mood %></option>
+                            <% }); %>
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <input type="search" class="search-input" name="topics" id="articles-search" placeholder="Enter your search">
+                        <br>
+                        <br>
+                        <button type="submit" class="search-button">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card1" id="card-books" data-target="/books/store">
+                <h2>BUY BOOKS</h2>
+                <img src="/img/books-logo.png" alt="Buy Books">
+                <div class="search-bar">
+                    <form id="searchFormBooks" class="searchForm" method="GET" action="">
+                        <select class="mood-select" name="BookValue" id="books-mood">
+                            <!-- Options populated by JavaScript -->
+                            <option value="">Select a Mood</option>
+                            <% Object.keys(moodTopics).forEach(function(mood) { %>
+                                <option value="<%= mood %>"><%= mood %></option>
+                            <% }); %>
+                        </select>
+                        <input type="search" name="bookName" class="search-input" id="books-search" placeholder="Enter your search">
+                        <br>
+                        <br>
+                        <button class="search-button">Search</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- Dotted line instead of <hr> -->
+        <div class="line-par">
+            <div class="dotted-line"></div>
+        </div>
+        
+        <!-- Tagline for Reading News -->
+        <div class="news-tagline">
+            Explore the latest news , for more updates refresh the page..
+        </div>
+        <div class="news-container"> 
+            <% 
+                const mySet = new Set();
+            %>
+            <% data.results.forEach(function(news, i) { %>
+                <% if(  news.image_url != null &&
+                        news.title != null && 
+                        news.description != null  &&
+                        news.link != null &&
+                        news.source_name != null && 
+                        news.pubDate != null &&
+                        news.pubDateTZ != null &&
+                        !mySet.has(news.title) &&
+                        news.language != null &&
+                        news.language === 'english')
+                { %> 
+                    <% mySet.add(news.title); %>
+                    <div class="news-card">
+                        <div class="up-part">
+                            <img src="<%= news.image_url %>" alt="Read Articles">
+                            <h2><%= news.title %></h2>
+                            <% let description = '' %>
+                            <% if(news.description.length <= 300 ){ %>
+                                <% description = news.description %>
+                            <% }else{ %>
+                                <% description = news.description.substring(0, 300) + "..." %>
+                            <% } %>
+                            <p><%= description %><a href="<%= news.link %>" target="_blank">...Read More</a></p>
+                            <p class="news-author"><strong>Source:</strong> <%= news.source_name %></p>
+                            <p class="news-published"><strong>Published:</strong> <%= news.pubDate %> <%= news.pubDateTZ %></p>
+                        </div>
+                        <label class="read-checkbox">
+                            <input type="checkbox" class="checkbox-input"> Mark as Read
+                        </label>
+                    </div>
+                <% } %>
+            <% }); %>
+            <% mySet.clear(); %>
+        </div>
+
+        <div class="footer">
+            <div class="icons">
+                <a href="https://www.facebook.com/bookswagoneducationalfacts/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://x.com/bookswagon_in" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/bookswagon/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.pinterest.co.uk/bookswagon/" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+                <a href="https://www.youtube.com/channel/UCrJ4T5_wqMb_eZWtC-staVQ" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/bookswagon_official/" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
+            </div>
+            <div class="text">
+                Copyright © 2024 . infora.com. All Rights Reserved
+            </div>
+        </div>
+    </main>
+
+    <script src="/articles/js/data.js"></script>
+    <script src="/books/js/data.js"></script>
+    <script src="/news/js/data.js"></script>
+
+    <script src="/main.js"></script>
+</body>
+</html>
+
+<script>
+
+
+        // Wait for the DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.checkbox-input');
+
+            // Loop through all checkboxes and add event listener
+            checkboxes.forEach(function(checkbox){
+                checkbox.addEventListener('click', function() {
+                    // Find the closest parent div with the class 'news-card'
+                    const newsCard = checkbox.closest('.news-card');
+                    
+                    // Toggle the 'checked-background' class based on whether the checkbox is checked
+                    if (checkbox.checked) {
+                        newsCard.classList.add('checked-background');
+                    } else {
+                        newsCard.classList.remove('checked-background');
+                    }
+                });
+            });
+        });
+    </script>

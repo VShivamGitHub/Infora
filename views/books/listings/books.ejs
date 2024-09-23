@@ -1,0 +1,60 @@
+<% layout("/books/layouts/boilerPlate") %>
+<style>
+  .tax-info{
+    display: none;
+  }
+  a{
+    text-decoration: none;
+  }
+</style>
+
+<div class="content row row-col-lg-4 row-col-md-2 row-col-sm-1 mt-3">
+    <p>Showing Results for <i>"<%= bookName %>"</i></p>
+    <hr style="height: 2px; background-color: black; border: none;" >
+    <% data.items.forEach(function(book) { %>
+      <% if(book.volumeInfo.imageLinks != null && 
+            book.volumeInfo.imageLinks.smallThumbnail != null &&
+            book.volumeInfo.imageLinks.thumbnail != null &&
+            book.volumeInfo.title != null &&  
+            book.volumeInfo.authors != null){ %>
+        <div class="card listing-card" >
+          <% let finalPrice = 0; %>
+          <% if (book.saleInfo != null && book.saleInfo.listPrice != null && book.saleInfo.listPrice.amount != null) { %>
+            <% finalPrice = book.saleInfo.listPrice.amount; %>
+          <% } else { %>
+            <% finalPrice = ((Math.random() * (2001)) + 3000).toFixed(1); %>
+          <% } %>
+          <form method="POST" action="/books/store/<%= bookName %>/<%= book.id %>" >
+            <input type="hidden" name="price" value="<%= finalPrice %>">
+            <button type="submit" class="cards-button">
+              <div class="card-body">
+                <img src="<%= book.volumeInfo.imageLinks.smallThumbnail %>" class="card-img-top " alt="this is an image">
+                <p class="card-text">
+                  <% if(book.volumeInfo.title.length <= 27 ){ %>
+                    <b><%= book.volumeInfo.title %></b>
+                  <% }else{ %>
+                    <b><%= book.volumeInfo.title.substring(0, 27) + "..." %></b>
+                  <% } %>
+                  <br>
+                  <% if(book.volumeInfo.authors[0].length <= 27 ){ %>
+                    <span><%= book.volumeInfo.authors[0] %></span>
+                  <% }else{ %>
+                    <span><%= book.volumeInfo.authors[0].substring(0, 27) + "..." %></span>
+                  <% } %>
+                  <br>
+                </p>
+              </div>
+              <div class="btn-info">
+                <div class="price">
+                  &#8377; <%= finalPrice %>
+                </div>
+                <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
+              </div>   
+            </button>
+          </form>  
+        </div>
+      <% } %>
+    <% }) %>
+    <hr style="height: 2px; background-color: black; border: none;" >
+    <div style="height: 7rem;border:0px"></div>
+</div>
