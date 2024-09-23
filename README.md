@@ -53,4 +53,8 @@ The project uses **ExpressJS** as the backend framework and **EJS** for renderin
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/VShivamGitHub/INFORA.git
+   git clone https://github.com/VShivamGitHub/INFORA.git4
+
+2. Start the website:
+   ```bash
+   https://infora-614q4d1bl-vshivam0808s-projects.vercel.app
